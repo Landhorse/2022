@@ -24,10 +24,11 @@ public final class Constants {
       */
     public static abstract class Colors {
        
-        
+        public static final boolean IS_BLUE = false;
+        public static final double CONF_THRESHOLD = 0.5; // Temp
         //public static final Color kBlueTarget = ColorMatch.makeColor(0.136, 0.412, 0.450);
-        public static final Color kBlueTarget = new Color(0.136, 0.412, 0.450);
-        public static final Color kRedTarget = new  Color (0.475, 0.371, 0.153);
+        public static final Color BLUE_TARGET = new Color(0.136, 0.412, 0.450);
+        public static final Color RED_TARGET = new  Color (0.475, 0.371, 0.153);
       
     }
     /**
@@ -77,44 +78,13 @@ public final class Constants {
             public static final double SHOOT_TALON_INTAKE_SPEED = -1.0; // Temp
             public static final double CONVEY_TALON_SHOOT_SPEED = 1.0; // Temp
             public static final double CONVEY_TALON_INTAKE_SPEED = 1.0; // Temp
-            public static final double ARM_TALON_SHOOT_SPEED = 1.0; // Temp
-            public static final double ARM_TALON_INTAKE_SPEED = 1.0; // Temp
+            public static final double ARM_TALON_SPEED = 1.0; // Temp
             public static final double LELV_TALON_SPEED = 1.0; // Temp
             public static final double RELV_TALON_SPEED = 1.0; // Temp
 
         }
     
-        /**
-         * Class holding encoder infromation
-         */
-        public static abstract class Encoders {
-
-            /**
-             * Class holding DIO port information
-             */
-            public static abstract class DIOs {
-                public static final int[] ARM_ENCODER_PORT = {0, 1}; // Temp
-                public static final int[] ELV_ENCODER_PORT = {2, 3}; // Temp
-            }
-
-            /**
-             * Class holding distance per pulse
-             */
-            public static abstract class DPRs {
-                public static final double ARM_ENCODERS_DPR = 4./256; // Temp
-                public static final double ELV_ENCODERS_DPR = 4./256; // Temp
-            }
-
-            /**
-             * Class holding distance limits for encoders
-             */
-            public static abstract class Distances {
-                public static final double ARM_INTAKE_DISTANCE = 0;
-                public static final double ARM_SHOOT_DISTANCE = 1;
-                public static final double ELV_UP_DISTANCE = 1;
-                public static final double ELV_DO_DISTANCE = 0;
-            }
-        }
+        
     }
 
     /**
@@ -142,12 +112,74 @@ public final class Constants {
          * Class holding the ids of the buttons (mostly for operator)
          */
         public static abstract class ButtonIDs {
-            public static final int SHOOT_BUTTON_ID = 0; // Temp;
-            public static final int INTAKE_BUTTON_ID = 1; // Temp;
-            public static final int ELV_UP_BUTTON_ID = 2; // Temp;
-            public static final int ELV_DO_BUTTON_ID = 3; // Temp;
-            public static final int ARM_UP_BUTTON_ID = 4; // Temp;
-            public static final int ARM_DO_BUTTON_ID = 5; // Temp;
+            public static final int SHOOT_BUTTON_ID = 1;
+            public static final int INTAKE_BUTTON_ID = 2; 
+            public static final int ELV_UP_BUTTON_ID = 8;
+            public static final int ELV_DO_BUTTON_ID = 10;
+            public static final int ARM_INTAKE_BUTTON_ID = 7;
+            public static final int ARM_SHOOT_BUTTON_ID = 9;
+            public static final int ARM_UP_BUTTON_ID = 11;
+            public static final int ARM_MOVE_BUTTON_ID = 12;
         }
+    }
+
+    public static abstract class Sensors {
+        /**
+         * Class holding encoder information
+         */
+        public static abstract class Encoders {
+
+            /**
+             * Class holding DIO port information
+             */
+            public static abstract class DIOs {
+                public static final int[] ARM_ENCODER_PORT = {0, 1}; // Temp
+                public static final int[] ELV_ENCODER_PORT = {2, 3}; // Temp
+            }
+
+            /**
+             * Class holding distance per pulse
+             */
+            public static abstract class DPRs {
+                public static final double ARM_ENCODERS_DPR = 4./256; // Temp
+                public static final double ELV_ENCODERS_DPR = 4./256; // Temp
+            }
+
+            /**
+             * Class holding distance limits for encoders
+             */
+            public static abstract class Distances {
+                public static final double THRESHOLD = 0.5;
+                public static final double ARM_INTAKE_DISTANCE = 0;
+                public static final double ARM_SHOOT_DISTANCE = 0.5;
+                public static final double ARM_UP_DISTANCE = 1;
+
+                public static final double ELV_DO_DISTANCE = 0;
+                public static final double ELV_UP_DISTANCE = 1;
+            }
+        }
+        /**
+         * Class holding ultrasonic information
+         */
+        public static abstract class Ultrasonics {
+            
+            public static final double DISTANCE_MULT = 1; // Temp
+            public static final double AUTO_DRIVE_SPEED = 1; // Temp
+            public static abstract class DIOs {
+                public static final int[] LEFT_PORT = {4, 5}; // Temp
+                public static final int[] RIGHT_PORT = {6, 7}; // Temp
+            }
+            public static abstract class Distances {
+                public static final double SLOW_DISTANCE = 1; // Temp
+                public static final double MIN_DISTANCE = 0.5; // Temp
+            }
+        }
+
+        public static abstract class Gyros {
+            public static abstract class Port {
+                public static final int port = 0; // Temp
+            }
+        }
+
     }
 }

@@ -37,6 +37,6 @@ public class ElevateDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_elevator.getDistance() <= Constants.Talons.Encoders.Distances.ELV_DO_DISTANCE;
+    return m_elevator.getDistance() <= Constants.Sensors.Encoders.Distances.ELV_DO_DISTANCE;
   }
 }

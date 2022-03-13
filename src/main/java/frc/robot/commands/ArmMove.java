@@ -4,31 +4,38 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-public class ArmToIntake extends CommandBase {
+public class ArmMove extends CommandBase {
 
   private final Arm m_arm;
-  private double speed;
-  /** Creates a new ArmToIntake. */
-  public ArmToIntake(Arm arm) {
+  private final DoubleSupplier m_forwardSupplier;
+  /** Creates a new ArmMove. */
+  public ArmMove(Arm arm, DoubleSupplier forwardSupplier) {
     m_arm = arm;
+    m_forwardSupplier = forwardSupplier;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    speed = Math.copySign(Constants.Talons.Speeds.ARM_TALON_SPEED, Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE - m_arm.getDistance());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.set(speed);
+    double forward = m_forwardSupplier.getAsDouble();
+    if ((forward > 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE)) ||
+        (forward < 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE))) {
+      m_arm.set(0);
+    } else {
+      m_arm.set(forward);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +47,6 @@ public class ArmToIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE);
+    return false;
   }
 }

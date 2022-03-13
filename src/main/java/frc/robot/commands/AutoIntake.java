@@ -6,40 +6,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Shooter;
 
-public class ArmToIntake extends CommandBase {
-
-  private final Arm m_arm;
-  private double speed;
-  /** Creates a new ArmToIntake. */
-  public ArmToIntake(Arm arm) {
-    m_arm = arm;
+public class AutoIntake extends CommandBase {
+  private final Shooter m_shooter;
+  private final ColorSensor m_colorSensor;
+  /** Creates a new AutoIntake. */
+  public AutoIntake(Shooter shooter, ColorSensor colorSensor) {
+    m_shooter = shooter;
+    m_colorSensor = colorSensor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_arm);
+    addRequirements(m_shooter, m_colorSensor);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    speed = Math.copySign(Constants.Talons.Speeds.ARM_TALON_SPEED, Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE - m_arm.getDistance());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.set(speed);
+    m_shooter.setFlyWheels(Constants.Talons.Speeds.SHOOT_TALON_INTAKE_SPEED);
+    m_shooter.setConvey(Constants.Talons.Speeds.CONVEY_TALON_INTAKE_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_arm.set(0);
+    m_shooter.setFlyWheels(0);
+    m_shooter.setConvey(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE);
+    return m_colorSensor.isAllianceColor();
   }
 }

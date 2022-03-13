@@ -20,9 +20,9 @@ public class Arm extends SubsystemBase {
     motor = new TalonSRX(Constants.Talons.IDs.ARM_TALON_ID);
     motor.setInverted(Constants.Talons.Inversions.ARM_TALON_INVERT);
 
-    encoder = new Encoder(Constants.Talons.Encoders.DIOs.ARM_ENCODER_PORT[0],
-        Constants.Talons.Encoders.DIOs.ARM_ENCODER_PORT[1]);
-    encoder.setDistancePerPulse(Constants.Talons.Encoders.DPRs.ARM_ENCODERS_DPR);
+    encoder = new Encoder(Constants.Sensors.Encoders.DIOs.ARM_ENCODER_PORT[0],
+        Constants.Sensors.Encoders.DIOs.ARM_ENCODER_PORT[1]);
+    encoder.setDistancePerPulse(Constants.Sensors.Encoders.DPRs.ARM_ENCODERS_DPR);
   }
 
   public void set(double speed) {
@@ -31,6 +31,10 @@ public class Arm extends SubsystemBase {
 
   public double getDistance() {
     return encoder.getDistance();
+  }
+
+  public boolean isInThreshold(double target) {
+    return Math.abs(target - getDistance()) < Constants.Sensors.Encoders.Distances.THRESHOLD;
   }
 
   @Override

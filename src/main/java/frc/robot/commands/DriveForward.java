@@ -6,16 +6,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Drivetrain;
 
-public class ElevateUp extends CommandBase {
-  Elevator m_elevator;
+public class DriveForward extends CommandBase {
 
-  /** Creates a new ElevateUp. */
-  public ElevateUp(Elevator elevator) {
-    m_elevator = elevator;
+  private final Drivetrain m_drivetrain;
+  /** Creates a new DriveForward. */
+  public DriveForward(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_elevator);
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -25,18 +25,23 @@ public class ElevateUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_elevator.set(1);
+    if (m_drivetrain.getDistance() < Constants.Sensors.Ultrasonics.Distances.SLOW_DISTANCE) {
+      double speed = m_drivetrain.getDistance() * Constants.Sensors.Ultrasonics.DISTANCE_MULT;
+      m_drivetrain.set(speed, speed);
+    } else {
+      m_drivetrain.set(Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED, Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_elevator.set(0);
+    m_drivetrain.set(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_elevator.getDistance() >= Constants.Sensors.Encoders.Distances.ELV_UP_DISTANCE;
+    return m_drivetrain.getDistance() < Constants.Sensors.Ultrasonics.Distances.MIN_DISTANCE;
   }
 }

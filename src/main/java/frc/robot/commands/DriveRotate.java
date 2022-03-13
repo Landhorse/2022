@@ -6,40 +6,39 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drivetrain;
 
-public class ArmToIntake extends CommandBase {
-
-  private final Arm m_arm;
-  private double speed;
-  /** Creates a new ArmToIntake. */
-  public ArmToIntake(Arm arm) {
-    m_arm = arm;
+public class DriveRotate extends CommandBase {
+  private final Drivetrain m_drivetrain;
+  private double dir;
+  /** Creates a new DriveRotate. */
+  public DriveRotate(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_arm);
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    speed = Math.copySign(Constants.Talons.Speeds.ARM_TALON_SPEED, Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE - m_arm.getDistance());
+    dir = Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED * m_drivetrain.getLeftDistance() > m_drivetrain.getRightDistance()? 1 : -1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.set(speed);
+    m_drivetrain.set(-dir, dir);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_arm.set(0);
+    m_drivetrain.set(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE);
+    return Math.abs(m_drivetrain.getRotation() - 180) < 0.5;
   }
 }

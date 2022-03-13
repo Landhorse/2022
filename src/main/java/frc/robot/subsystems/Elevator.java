@@ -23,9 +23,9 @@ public class Elevator extends SubsystemBase {
     left.setInverted(Constants.Talons.Inversions.LELV_TALON_INVERT);
     right.setInverted(Constants.Talons.Inversions.RELV_TALON_INVERT);
 
-    encoder = new Encoder(Constants.Talons.Encoders.DIOs.ELV_ENCODER_PORT[0],
-                          Constants.Talons.Encoders.DIOs.ELV_ENCODER_PORT[1]);
-    encoder.setDistancePerPulse(Constants.Talons.Encoders.DPRs.ELV_ENCODERS_DPR);
+    encoder = new Encoder(Constants.Sensors.Encoders.DIOs.ELV_ENCODER_PORT[0],
+                          Constants.Sensors.Encoders.DIOs.ELV_ENCODER_PORT[1]);
+    encoder.setDistancePerPulse(Constants.Sensors.Encoders.DPRs.ELV_ENCODERS_DPR);
   }
 
   public void set(double speed) {

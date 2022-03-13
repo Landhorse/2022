@@ -5,28 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Arm;
 
 public class ArmToUp extends CommandBase {
+
+  private final Arm m_arm;
+  private double speed;
   /** Creates a new ArmToUp. */
-  public ArmToUp() {
+  public ArmToUp(Arm arm) {
+    m_arm = arm;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    speed = Math.copySign(Constants.Talons.Speeds.ARM_TALON_SPEED, Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE - m_arm.getDistance());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_arm.set(speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_arm.set(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE);
   }
 }
