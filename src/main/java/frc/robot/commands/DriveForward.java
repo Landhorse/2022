@@ -29,7 +29,7 @@ public class DriveForward extends CommandBase {
       double speed = m_drivetrain.getDistance() * Constants.Sensors.Ultrasonics.DISTANCE_MULT;
       m_drivetrain.set(speed, speed);
     } else {
-      m_drivetrain.set(Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED, Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED);
+      m_drivetrain.set(Constants.Sensors.AUTO_DRIVE_SPEED, Constants.Sensors.AUTO_DRIVE_SPEED);
     }
   }
 

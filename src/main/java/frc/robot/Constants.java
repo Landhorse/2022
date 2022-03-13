@@ -26,10 +26,10 @@ public final class Constants {
        
         public static final boolean IS_BLUE = false;
         public static final double CONF_THRESHOLD = 0.5; // Temp
-        //public static final Color kBlueTarget = ColorMatch.makeColor(0.136, 0.412, 0.450);
         public static final Color BLUE_TARGET = new Color(0.136, 0.412, 0.450);
         public static final Color RED_TARGET = new  Color (0.475, 0.371, 0.153);
-      
+        
+        //public static final Color kBlueTarget = ColorMatch.makeColor(0.136, 0.412, 0.450);
     }
     /**
      * Class holding all information pertaining to talons
@@ -124,11 +124,11 @@ public final class Constants {
     }
 
     public static abstract class Sensors {
+        public static final double AUTO_DRIVE_SPEED = 1; // Temp
         /**
          * Class holding encoder information
          */
         public static abstract class Encoders {
-
             /**
              * Class holding DIO port information
              */
@@ -164,7 +164,7 @@ public final class Constants {
         public static abstract class Ultrasonics {
             
             public static final double DISTANCE_MULT = 1; // Temp
-            public static final double AUTO_DRIVE_SPEED = 1; // Temp
+            
             public static abstract class DIOs {
                 public static final int[] LEFT_PORT = {4, 5}; // Temp
                 public static final int[] RIGHT_PORT = {6, 7}; // Temp
@@ -176,6 +176,7 @@ public final class Constants {
         }
 
         public static abstract class Gyros {
+            public static final double THRESHOLD = 0.5;
             public static abstract class Port {
                 public static final int port = 0; // Temp
             }

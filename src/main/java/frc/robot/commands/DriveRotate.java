@@ -10,7 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveRotate extends CommandBase {
   private final Drivetrain m_drivetrain;
-  private double dir;
+  private double speed;
   /** Creates a new DriveRotate. */
   public DriveRotate(Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
@@ -21,13 +21,13 @@ public class DriveRotate extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    dir = Constants.Sensors.Ultrasonics.AUTO_DRIVE_SPEED * m_drivetrain.getLeftDistance() > m_drivetrain.getRightDistance()? 1 : -1;
+    speed = Constants.Sensors.AUTO_DRIVE_SPEED * m_drivetrain.getLeftDistance() > m_drivetrain.getRightDistance()? 1 : -1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.set(-dir, dir);
+    m_drivetrain.set(-speed, speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +39,6 @@ public class DriveRotate extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drivetrain.getRotation() - 180) < 0.5;
+    return Math.abs(m_drivetrain.getRotation() - 180) < Constants.Sensors.Gyros.THRESHOLD;
   }
 }

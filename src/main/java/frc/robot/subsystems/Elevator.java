@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,13 +33,15 @@ public class Elevator extends SubsystemBase {
     left.set(ControlMode.PercentOutput, speed * Constants.Talons.Speeds.LELV_TALON_SPEED);
     right.set(ControlMode.PercentOutput, speed * Constants.Talons.Speeds.RELV_TALON_SPEED);
   }
+  
+  public double getDistance() {
+    return encoder.getDistance();
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator Encoder", getDistance());
   }
 
-  public double getDistance() {
-    return encoder.getDistance();
-  }
 }
